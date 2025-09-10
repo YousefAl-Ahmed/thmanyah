@@ -1,25 +1,19 @@
 // src/app/page.tsx
-import SearchScreen from '@/features/search/SearchScreen';
-// src/app/page.tsx
 import type { Metadata } from "next";
-/** Page-level metadata (uses the template from layout if you set one) */
-export const metadata: Metadata = {
-  title: "Search",
-};
+import SearchScreen from "@/features/search/SearchScreen";
 
-type PageProps = {
-  searchParams?: {
-    q?: string | string[];
-  };
-};
+export const metadata: Metadata = { title: "Search" };
 
-/**
- * Server component (default).
- * - Derives `initialQ` from URL (?q=...) but defaults to "" (no UI change).
- * - Safe guarding against array values from repeated query params.
- */
-export default function HomePage({ searchParams }: PageProps) {
-  const qParam = searchParams?.q;
+type SP = Record<string, string | string[] | undefined>;
+type Props = { searchParams?: SP | Promise<SP> };
+
+export default async function HomePage({ searchParams }: Props) {
+  const sp: SP | undefined =
+    searchParams && "then" in (searchParams as never)
+      ? await (searchParams as Promise<SP>)
+      : (searchParams as SP | undefined);
+
+  const qParam = sp?.q;
   const initialQ = typeof qParam === "string" ? qParam : "";
 
   return <SearchScreen initialQ={initialQ} />;
