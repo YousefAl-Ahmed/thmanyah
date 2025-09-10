@@ -1,0 +1,17 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model SearchResult {
+  id        Int      @id @default(autoincrement())
+  term      String
+  result    Json
+  createdAt DateTime @default(now())
+
+  @@index([term])
+}

@@ -1,0 +1,32 @@
+# Node
+**/node_modules
+
+# Next.js
+thmanyah-frontend/.next
+thmanyah-frontend/out
+
+# NestJS / builds
+thmanyah-backend/dist
+**/*.tsbuildinfo
+
+# Prisma
+**/prisma/migrations/*/steps.json
+
+# Env / secrets
+.env
+.env.local
+**/.env
+**/.env.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json

@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* optional theme */
+:root { color-scheme: dark; }
+body { @apply bg-[#0f1115] text-gray-200; }
+
+
+@keyframes ripple-seq {
+  0% {
+    transform: scale(var(--from, 0.2));
+    opacity: 0;               /* start hidden */
+  }
+  10% { opacity: 1; }         /* quick fade in at start */
+  80% { opacity: 0.35; }
+  100% {
+    transform: scale(1);      /* all rings end at same diameter */
+    opacity: 0;               /* fade out */
+  }
+}
+
+.animate-ripple-seq {
+  /* base state during delay (before animation starts) */
+  opacity: 0;                                      /* hidden while waiting */
+  transform: scale(var(--from, 0.2));              /* pre-scale so no jump */
+  animation: ripple-seq var(--dur, 2.2s) ease-out infinite;
+  will-change: transform, opacity;
+}
+/* Horizontal scroll area with hoverable thin scrollbar */
+.h-scroll {
+  overflow-x: auto;
+  overflow-y: visible;
+  /* Firefox */
+  scrollbar-width: thin; 
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+
+}
+
+/* Webkit (Chrome, Safari) */
+
+
+.scroll-content {
+  display: flex;
+  gap: 1rem; /* space between cards */
+}
+
+
+:root {
+  --sidebar-w: 11rem; /* Tailwind w-44 = 11rem */
+}
+
+/* Keep page width stable when the vertical scrollbar appears/disappears */
+html {
+  /* Modern fix: reserve scrollbar space */
+  scrollbar-gutter: stable both-edges;
+}
+
+/* Fallback for browsers that don't support scrollbar-gutter */
+@supports not (scrollbar-gutter: stable) {
+  html {
+    /* Always show the vertical scrollbar so width never changes */
+    overflow-y: scroll;
+  }
+}
+.episodes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+  gap: 1rem; /* spacing between cards */
+}
+.h-scroll::-webkit-scrollbar { height: 6px; }
+.h-scroll::-webkit-scrollbar-track { background: transparent; }
+.h-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.15);
+  border-radius: 9999px;
+}
+/* Firefox */
+.h-scroll { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.15) transparent; }
