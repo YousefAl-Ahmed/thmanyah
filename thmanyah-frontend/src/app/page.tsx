@@ -5,16 +5,15 @@ import SearchScreen from "@/features/search/SearchScreen";
 export const metadata: Metadata = { title: "Search" };
 
 type SP = Record<string, string | string[] | undefined>;
-type Props = { searchParams?: SP | Promise<SP> };
 
-export default async function HomePage({ searchParams }: Props) {
-  const sp: SP | undefined =
-    searchParams && "then" in (searchParams as never)
-      ? await (searchParams as Promise<SP>)
-      : (searchParams as SP | undefined);
-
-  const qParam = sp?.q;
-  const initialQ = typeof qParam === "string" ? qParam : "";
+export default async function HomePage({
+  searchParams,
+}: {
+  searchParams?: Promise<SP>;
+}) {
+  const sp = (await searchParams) ?? {};
+  const q = sp.q;
+  const initialQ = typeof q === "string" ? q : "";
 
   return <SearchScreen initialQ={initialQ} />;
 }
